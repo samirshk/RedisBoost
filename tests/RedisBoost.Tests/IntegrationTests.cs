@@ -187,7 +187,7 @@ namespace RedisBoost.Tests
             using (var cli = CreateClient())
             {
                 cli.SetAsync("Key", GetBytes("Value")).Wait();
-                var expR = cli.ExpireAtAsync("Key", DateTime.Now.AddMinutes(10)).Result;
+                var expR = cli.ExpireAtAsync("Key", DateTime.Now.AddDays(1)).Result;
                 var ttl = cli.TtlAsync("Key").Result;
                 Assert.Greater(ttl, 0);
             }
@@ -262,7 +262,7 @@ namespace RedisBoost.Tests
             {
                 cli.LPushAsync("mylist", GetBytes("Hello world"));
                 Assert.AreEqual(1, cli.ObjectAsync(Subcommand.RefCount, "mylist").Result.AsInteger());
-                Assert.AreEqual("ziplist", GetString(cli.ObjectAsync(Subcommand.Encoding, "mylist").Result.AsBulk()));
+                Assert.AreEqual("quicklist", GetString(cli.ObjectAsync(Subcommand.Encoding, "mylist").Result.AsBulk()));
             }
         }
 
