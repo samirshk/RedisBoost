@@ -1,5 +1,6 @@
 ﻿using ServiceStack.Redis.Pipeline;
 using System.Configuration;
+using System.Net;
 using System.Threading;
 
 namespace RedisBoost.ConsoleBenchmark.Clients
@@ -23,8 +24,8 @@ namespace RedisBoost.ConsoleBenchmark.Clients
         public string ClientName { get { return "ServiceStack.Redis"; } }
         public void Connect(RedisConnectionStringBuilder connectionString)
         {
-            ServiceStack.Redis.RedisManagerPool redisManager = new ServiceStack.Redis.RedisManagerPool(_redisConfigurationString);
-            _client = redisManager.GetClient();
+            _client = new ServiceStack.Redis.RedisClient(((IPEndPoint)connectionString.EndPoint).Address.ToString(),
+                                                         ((IPEndPoint)connectionString.EndPoint).Port);
         }
 
         public void SetAsync(string key, string value)

@@ -69,6 +69,7 @@ namespace RedisBoost.ConsoleBenchmark
                     RunTestCase(Payloads.SmallPayload, LoopSize, testCase);
                     break;
             }
+            Console.ReadLine();
         }
 
         private static TestCase InteractiveInitialization()
